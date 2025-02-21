@@ -1,10 +1,11 @@
 require './lib/ship'
 require 'pry'
-RSpec.describe Ship do
 
-    describe '#inialize' do
+RSpec.describe Ship do
     
-    #add before each do block w cruiser
+    #Add in before each block
+    describe '#inialize' do
+
         it 'exists' do
             cruiser = Ship.new("Cruiser", 3)
 
