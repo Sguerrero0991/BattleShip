@@ -1,13 +1,26 @@
 require './lib/cell'
 
 class Board 
-  attr_reader :cell
+  attr_reader :cells
   def initialize
-    @cells = {}
-    ("A".."D").each do |letter|
-      (1..4).each do |num|
-        @cells["#{letter}#{num}"] = Cell.new("#{letter}#{num}")
+    @cells = {} #Creates an empty hash to store the cells
+
+    generate_cells #Call the method to generate cells
+  end
+
+  def generate_cells #Define the row labels
+    
+    rows = ["A", "B", "C", "D"] #Defining the row labels
+
+    columns = ["1", "2", "3", "4"] #Define the column labels
+
+    rows.each do |row|
+      columns.each do |column|
+        coordinate = row + column #Combining to create coordinate string
+
+        @cells[coordinate] = Cell.new(coordinate) #Assigns new Cell objects with coordinate key
       end
     end
+
   end
 end

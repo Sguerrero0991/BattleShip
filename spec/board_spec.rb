@@ -11,7 +11,7 @@ RSpec.describe Board do
 
   it 'is a board and has 16 cells' do
     board = Board.new
-    expect(board.cells).to be(Hash)
+    expect(board.cells).to be_a(Hash)
     expect(board.cells.length).to eq(16)
     expect(board.cells.keys).to eq([
       "A1", "A2", "A3", "A4",
@@ -22,5 +22,11 @@ RSpec.describe Board do
     board.cells.values.each do |cell|
       expect(cell).to be_a(Cell)
     end
+  end
+
+  it 'can generate coordinate pairs with generate_cells' do
+    board = Board.new
+
+    #Test the new method
   end
 end 
