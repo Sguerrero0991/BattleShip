@@ -21,6 +21,9 @@ class Board
         @cells[coordinate] = Cell.new(coordinate) #Assigns new Cell objects with coordinate key
       end
     end
+  end
 
+  def valid_coordinate?(coordinate) #Checking the cells hash for the key given
+    @cells.key?(coordinate)
   end
 end
