@@ -126,7 +126,7 @@ RSpec.describe Board do
   end
 
   describe '#render' do
-    xit 'renders an empty board' do
+    it 'renders an empty board' do
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)
@@ -141,7 +141,7 @@ RSpec.describe Board do
       )
     end
 
-    xit 'shows ships when show_ships is true' do
+    it 'shows ships when show_ships is true' do
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)
@@ -157,7 +157,7 @@ RSpec.describe Board do
       )
     end
 
-    xit 'renders with hits and misses' do
+    it 'renders with hits and misses' do
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)
@@ -166,7 +166,7 @@ RSpec.describe Board do
       board.place(submarine, ["C1", "D1"])
 
       board.cells["A1"].fire_upon
-      board.cells["B3"].fire_upon
+      board.cells["B4"].fire_upon
       board.cells["C1"].fire_upon
       board.cells["D1"].fire_upon
 
@@ -180,7 +180,7 @@ RSpec.describe Board do
 
     end
 
-    xit 'renders with ships, hits and misses' do
+    it 'renders with ships, hits and misses' do
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)
@@ -189,7 +189,7 @@ RSpec.describe Board do
       board.place(submarine, ["C1", "D1"])
 
       board.cells["A1"].fire_upon
-      board.cells["B3"].fire_upon
+      board.cells["B4"].fire_upon
       board.cells["C1"].fire_upon
       board.cells["D1"].fire_upon
 
@@ -198,7 +198,7 @@ RSpec.describe Board do
         "A H S S . \n" +
         "B . . . M \n" +
         "C X . . . \n" +
-        "D X . . . \n"
+        "D X . . . \n" 
       )
     end
   end

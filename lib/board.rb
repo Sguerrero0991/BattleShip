@@ -59,5 +59,22 @@ class Board
       @cells[coordinate].place_ship(ship)
     end
   end
+
+  def render(show_ships = false)
+    board_display = "  1 2 3 4 \n" #two extra spaces to start, one space before the \n
+    rows = ["A", "B", "C", "D"]
+
+    rows.each do |row|
+      row_display = row + " "
+      (1..4).each do |colms|
+        coordinate = row + colms.to_s
+        row_display += @cells[coordinate].render(show_ships) + " "
+      end
+
+      board_display += row_display.strip + " \n" #had to add extra space here
+    end
+
+    board_display
+  end
 end
 
