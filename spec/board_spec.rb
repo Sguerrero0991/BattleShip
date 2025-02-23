@@ -117,8 +117,85 @@ RSpec.describe Board do
     it 'does not allow overlapping ships' do
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
+      submarine = Ship.new("Submarine", 2)
 
-      expect(board)
+      board.place(cruiser, ["A1", "A2", "A3"])
+
+      expect(board.valid_placement?(submarine, ["A1", "B1"])).to be false
+    end
+  end
+
+  describe '#render' do
+    it 'renders an empty board' do
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+      submarine = Ship.new("Submarine", 2)
+
+      #expects
+      expect(board.render).to eq(
+        "  1 2 3 4 \n" +
+        "A . . . . \n" +
+        "B . . . . \n" +
+        "C . . . . \n" +
+        "D . . . . \n"
+      )
+    end
+
+    it 'shows ships when show_ships is true' do
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+      submarine = Ship.new("Submarine", 2)
+
+      board.place(cruiser, ["A1", "A2", "A3"])
+      #expects
+      expect(board.render(true)).to eq(
+        "  1 2 3 4 \n" +
+        "A S S S . \n" +
+        "B . . . . \n" +
+        "C . . . . \n" +
+        "D . . . . \n" 
+      )
+    end
+
+    it 'renders with hits and misses' do
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+      submarine = Ship.new("Submarine", 2)
+
+      board.place(cruiser, ["A1", "A2", "A3"])
+      board.cells["A1"].fire_upon
+      board.cells["B3"].fire_upon
+      board.cells["C1"].fire_upon
+      board.cells["D1"].fire_upon
+
+      expect(board.render).to eq(
+        "  1 2 3 4 \n" +
+        "A H . . . \n" +
+        "B . . . M \n" +
+        "C X . . . \n" +
+        "D X . . . \n"
+      )
+
+    end
+
+    it 'renders with ships, hits and misses' do
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+      submarine = Ship.new("Submarine", 2)
+
+      board.place(cruiser, ["A1", "A2", "A3"])
+      board.cells["A1"].fire_upon
+      board.cells["B3"].fire_upon
+      board.cells["C1"].fire_upon
+      board.cells["D1"].fire_upon
+
+      expect(board.render(true)).to eq(
+        "  1 2 3 4 \n" +
+        "A H S S . \n" +
+        "B . . . M \n" +
+        "C X . . . \n" +
+        "D X . . . \n"
+      )
     end
   end
 end 
