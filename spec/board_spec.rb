@@ -91,4 +91,115 @@ RSpec.describe Board do
       expect(board.valid_placement?(cruiser, ["B1", "C1", "D1"])).to be true
     end
   end
+
+  describe '#place' do
+
+    it 'places a ship in the correct cells' do
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+
+      board.place(cruiser, ["A1", "A2", "A3"])
+
+      expect(board.cells["A1"].ship).to eq(cruiser)
+      expect(board.cells["A2"].ship).to eq(cruiser)
+      expect(board.cells["A3"].ship).to eq(cruiser)
+    end
+
+    it 'ensures the cells the ship are placed on contain the same ship object' do
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+
+      board.place(cruiser, ["A1", "A2", "A3"])
+
+      expect(board.cells["A3"].ship).to eq(board.cells["A2"].ship) #last part of interaction pattern
+    end
+
+    it 'does not allow overlapping ships' do
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+      submarine = Ship.new("Submarine", 2)
+
+      board.place(cruiser, ["A1", "A2", "A3"])
+
+      expect(board.valid_placement?(submarine, ["A1", "B1"])).to be false
+    end
+  end
+
+  describe '#render' do
+    it 'renders an empty board' do
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+      submarine = Ship.new("Submarine", 2)
+
+      #expects
+      expect(board.render).to eq(
+        "  1 2 3 4 \n" +
+        "A . . . . \n" +
+        "B . . . . \n" +
+        "C . . . . \n" +
+        "D . . . . \n"
+      )
+    end
+
+    it 'shows ships when show_ships is true' do
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+      submarine = Ship.new("Submarine", 2)
+
+      board.place(cruiser, ["A1", "A2", "A3"])
+      #expects
+      expect(board.render(true)).to eq(
+        "  1 2 3 4 \n" +
+        "A S S S . \n" +
+        "B . . . . \n" +
+        "C . . . . \n" +
+        "D . . . . \n" 
+      )
+    end
+
+    it 'renders with hits and misses' do
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+      submarine = Ship.new("Submarine", 2)
+
+      board.place(cruiser, ["A1", "A2", "A3"])
+      board.place(submarine, ["C1", "D1"])
+
+      board.cells["A1"].fire_upon
+      board.cells["B4"].fire_upon
+      board.cells["C1"].fire_upon
+      board.cells["D1"].fire_upon
+
+      expect(board.render).to eq(
+        "  1 2 3 4 \n" +
+        "A H . . . \n" +
+        "B . . . M \n" +
+        "C X . . . \n" +
+        "D X . . . \n"
+      )
+
+    end
+
+    it 'renders with ships, hits and misses' do
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+      submarine = Ship.new("Submarine", 2)
+
+      board.place(cruiser, ["A1", "A2", "A3"])
+      board.place(submarine, ["C1", "D1"])
+
+      board.cells["A1"].fire_upon
+      board.cells["B4"].fire_upon
+      board.cells["C1"].fire_upon
+      board.cells["D1"].fire_upon
+
+      expect(board.render(true)).to eq(
+        "  1 2 3 4 \n" +
+        "A H S S . \n" +
+        "B . . . M \n" +
+        "C X . . . \n" +
+        "D X . . . \n" 
+      )
+    end
+  end
 end 

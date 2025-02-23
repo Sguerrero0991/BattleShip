@@ -30,6 +30,7 @@ class Board
   def valid_placement?(ship, coordinates)
     return false unless coordinates.length == ship.length
     return false unless coordinates.all? { |coordinate| valid_coordinate?(coordinate) }
+    return false if coordinates.any? { |coordinate| @cells[coordinate].ship}
     
     # Check if coordinates are adjacent (either horizontally or vertically)
     rows = coordinates.map { |coordinate| coordinate[0] }
@@ -49,6 +50,31 @@ class Board
     end
     # Coordinates are neither all in the same row nor in the same column
     false
+  end
+
+  def place(ship, coordinates)
+    return unless valid_placement?(ship, coordinates)
+
+    coordinates.each do |coordinate|
+      @cells[coordinate].place_ship(ship)
+    end
+  end
+
+  def render(show_ships = false)
+    board_display = "  1 2 3 4 \n" #two extra spaces to start, one space before the \n
+    rows = ["A", "B", "C", "D"]
+
+    rows.each do |row|
+      row_display = row + " "
+      (1..4).each do |colms|
+        coordinate = row + colms.to_s
+        row_display += @cells[coordinate].render(show_ships) + " "
+      end
+
+      board_display += row_display.strip + " \n" #had to add extra space here
+    end
+
+    board_display
   end
 end
 
