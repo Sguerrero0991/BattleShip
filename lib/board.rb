@@ -30,6 +30,7 @@ class Board
   def valid_placement?(ship, coordinates)
     return false unless coordinates.length == ship.length
     return false unless coordinates.all? { |coordinate| valid_coordinate?(coordinate) }
+    return false if coordinates.any? { |coordinate| @cells[coordinate].ship}
     
     # Check if coordinates are adjacent (either horizontally or vertically)
     rows = coordinates.map { |coordinate| coordinate[0] }
@@ -49,6 +50,14 @@ class Board
     end
     # Coordinates are neither all in the same row nor in the same column
     false
+  end
+
+  def place(ship, coordinates)
+    return unless valid_placement?(ship, coordinates)
+
+    coordinates.each do |coordinate|
+      @cells[coordinate].place_ship(ship)
+    end
   end
 end
 
