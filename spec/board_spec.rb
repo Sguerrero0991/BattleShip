@@ -82,7 +82,7 @@ RSpec.describe Board do
       expect(board.valid_placement?(submarine, ["C2", "D3"])).to be false
     end
 
-    it 'can have valid placements' do
+    it 'can have valid placements' do # Happy path testing
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)
