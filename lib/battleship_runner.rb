@@ -1,7 +1,7 @@
 require 'lib/board'
 require 'lib/cell'
 require 'lib/ship'
-#require 'lib/game'
+require 'lib/game'
 
 def main_menu
     puts "Welcome to BATTLESHIP"
@@ -23,6 +23,4 @@ end
 
 def play_game
     game = Game.new # Initialize the logic for the game
-
-
 end
