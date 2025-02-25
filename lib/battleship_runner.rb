@@ -37,8 +37,14 @@ def play_game
     turn = Turn.new(game) #starts the game loop
     turn.play
 
-
-
+    puts "Game over, would you like to play again? (y/n)"
+    answer = gets.chomp.downcase
+    if answer == 'y'
+        play_game
+    else
+        main_menu
+    end
+    main_menu
 end
 
 
