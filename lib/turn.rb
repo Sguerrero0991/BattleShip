@@ -25,7 +25,7 @@ class Turn
     puts @game.player_board.render(true) #Show player board with ship
   end
 
-  def player_shot
+  def player_shot # May need a new check to guard against non existant coordinates?
     puts "Enter the coordinate for your shot:"
     coordinate = gets.chomp.upcase
     until @game.computer_board.valid_coordinate?(coordinate) && !@game.computer_board.cells[coordinate].fired_upon?
@@ -56,12 +56,12 @@ class Turn
     end
   end
 
-  def game_over?
+  def game_over? #had to use {} here with the or operator, would love feedback here.
     @game.player_ships.all? {|ship| ship.sunk?} || @game.computer_ships.all? {|ship| ship.sunk?}
   end
 
   def end_game
-    if (@game.player_ships.all? do |ship|
+    if (@game.player_ships.all? do |ship| #tried writing this in block notation, running into issues.
       ship.sunk?
       end)
       puts "Computer won!"
