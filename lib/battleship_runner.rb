@@ -5,7 +5,6 @@ require_relative 'game'
 require_relative 'turn'
 
 def main_menu
-    puts "DEBUG"
     puts "Welcome to BATTLESHIP"
     puts "Enter p to play. Enter q to quit."
     choice = gets.chomp.downcase

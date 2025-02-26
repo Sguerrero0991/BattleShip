@@ -48,11 +48,11 @@ class Turn
   def shot_result(board, coordinate)
     cell = board.cells[coordinate]
     if cell.empty? 
-      "miss"
+      return "miss"
     elsif cell.ship.sunk?
-      "hit and sunk a ship"
+      return "hit and sunk a ship"
     else
-      "hit"
+      return "hit"
     end
   end
 
