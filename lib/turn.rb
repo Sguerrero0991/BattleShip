@@ -1,7 +1,7 @@
-require 'lib/board'
-require 'lib/cell'
-require 'lib/ship'
-require 'lib/game'
+require_relative 'board'
+require_relative 'cell'
+require_relative 'ship'
+require_relative 'game'
 
 class Turn
   def initialize(game)
@@ -34,7 +34,7 @@ class Turn
     end
     @game.computer_board.cells[coordinate].fire_upon
     result = shot_result(@game.computer_board, coordinate)
-    puts "Your shot on #{coordniate} was a #{result}"
+    puts "Your shot on #{coordinate} was a #{result}"
   end
 
   def computer_shot
@@ -42,7 +42,7 @@ class Turn
     @computer_shots << coordinate
     @game.player_board.cells[coordinate].fire_upon
     result = shot_result(@game.player_board, coordinate)
-    puts "Computer shot on #{coordniate} was a #{result}"
+    puts "Computer shot on #{coordinate} was a #{result}"
   end
 
   def shot_result(board, coordinate)
@@ -56,16 +56,17 @@ class Turn
     end
   end
 
-  def game_over
+  def game_over?
     @game.player_ships.all? {|ship| ship.sunk?} || @game.computer_ships.all? {|ship| ship.sunk?}
   end
 
   def end_game
     if (@game.player_ships.all? do |ship|
       ship.sunk?
-    end)
-    puts "Computer won!"
-  else
-    puts "Congrats, you won!"
+      end)
+      puts "Computer won!"
+    else
+      puts "Congrats, you won!"
+    end
   end
 end

@@ -1,4 +1,6 @@
-require './lib/cell'
+require_relative 'cell'
+require_relative 'ship'
+require_relative 'game'
 require 'pry'
 
 class Board 
