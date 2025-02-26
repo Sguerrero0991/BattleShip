@@ -1,24 +1,41 @@
-# require './lib/board'
-# require './lib/ship'
-# require './lib/cell'
-# require './lib/game'
-# require 'pry'
+require './lib/board'
+require './lib/ship'
+require './lib/cell'
+require './lib/game'
+require 'pry'
 
-# RSpec.describe Game do
-#     describe '#initialize' do
-#         it 'exists' do
-#             game = Game.new
 
-#             expect(game).to be_a(Game)
-#         end
+RSpec.describe Game do
+    describe '#initialize' do
+        it 'exists' do
+            game = Game.new
 
-#         it 'initializes player and computer boards' do
-#             game = Game.new
+            expect(game).to be_a(Game)
+        end
 
-#             expect(game.player_board).to be_a(Board)
-#             expect(game.computer_board).to be_a(Board)
-#         end
+        it 'initializes player and computer boards' do
+            game = Game.new
 
+            expect(game.player_board).to be_a(Board)
+            expect(game.computer_board).to be_a(Board)
+        end
+
+        it 'correctly assigns ships to computer and player' do
+            game = Game.new
+
+            expect(game.player_ships).to eq([Ship.new("Cruiser", 3), Ship.new("Submarine", 2)])
+            expect(game.computer_ships).to eq([Ship.new("Cruiser", 3), Ship.new("Submarine", 2)])
+        end
+
+    end
+end
+        
+        
+        
+        
+        
+        
+        
 #         it 'initializes player and computer ships' do
 #             game = Game.new
 
