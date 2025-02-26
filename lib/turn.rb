@@ -1,7 +1,7 @@
-require 'lib/board'
-require 'lib/cell'
-require 'lib/ship'
-require 'lib/game'
+require_relative 'board'
+require_relative 'cell'
+require_relative 'ship'
+require_relative 'game'
 
 class Turn
   def initialize(game)
@@ -25,7 +25,7 @@ class Turn
     puts @game.player_board.render(true) #Show player board with ship
   end
 
-  def player_shot
+  def player_shot # May need a new check to guard against non existant coordinates?
     puts "Enter the coordinate for your shot:"
     coordinate = gets.chomp.upcase
     until @game.computer_board.valid_coordinate?(coordinate) && !@game.computer_board.cells[coordinate].fired_upon?
@@ -34,7 +34,7 @@ class Turn
     end
     @game.computer_board.cells[coordinate].fire_upon
     result = shot_result(@game.computer_board, coordinate)
-    puts "Your shot on #{coordniate} was a #{result}"
+    puts "Your shot on #{coordinate} was a #{result}"
   end
 
   def computer_shot
@@ -42,30 +42,31 @@ class Turn
     @computer_shots << coordinate
     @game.player_board.cells[coordinate].fire_upon
     result = shot_result(@game.player_board, coordinate)
-    puts "Computer shot on #{coordniate} was a #{result}"
+    puts "Computer shot on #{coordinate} was a #{result}"
   end
 
   def shot_result(board, coordinate)
     cell = board.cells[coordinate]
     if cell.empty? 
-      "miss"
+      return "miss"
     elsif cell.ship.sunk?
-      "hit and sunk a ship"
+      return "hit and sunk a ship"
     else
-      "hit"
+      return "hit"
     end
   end
 
-  def game_over
+  def game_over? #had to use {} here with the or operator, would love feedback here.
     @game.player_ships.all? {|ship| ship.sunk?} || @game.computer_ships.all? {|ship| ship.sunk?}
   end
 
   def end_game
-    if (@game.player_ships.all? do |ship|
+    if (@game.player_ships.all? do |ship| #tried writing this in block notation, running into issues.
       ship.sunk?
-    end)
-    puts "Computer won!"
-  else
-    puts "Congrats, you won!"
+      end)
+      puts "Computer won!"
+    else
+      puts "Congrats, you won!"
+    end
   end
 end

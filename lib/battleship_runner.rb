@@ -1,7 +1,8 @@
-require 'lib/board'
-require 'lib/cell'
-require 'lib/ship'
-require 'lib/game'
+require_relative 'board'
+require_relative 'cell'
+require_relative 'ship'
+require_relative 'game'
+require_relative 'turn'
 
 def main_menu
     puts "Welcome to BATTLESHIP"
@@ -44,7 +45,8 @@ def play_game
     else
         main_menu
     end
-    main_menu
 end
+
+main_menu
 
 
